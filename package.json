@@ -1,0 +1,25 @@
+{
+  "name": "authentication-system",
+  "version": "1.0.0",
+  "description": "Authentication System made using express and e.js.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "nodemon --watch '*.ts' --exec 'ts-node' src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/singlamohit1/authentication-system.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/singlamohit1/authentication-system/issues"
+  },
+  "homepage": "https://github.com/singlamohit1/authentication-system#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.4",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.2"
+  }
+}
