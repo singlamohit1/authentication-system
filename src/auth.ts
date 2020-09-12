@@ -1,7 +1,7 @@
 import { getUsers } from './database';
 
-const AUTH_USER_KEY = 'auth_user';
-const AUTH_PASS_KEY = 'auth_pass';
+export const AUTH_USER_KEY = 'auth_user';
+export const AUTH_PASS_KEY = 'auth_pass';
 
 export function checkAuth(req: any) {
     if (req.cookies[AUTH_USER_KEY] && req.cookies[AUTH_PASS_KEY]) {
@@ -21,3 +21,5 @@ export function checkAuth(req: any) {
         return false;
     }
 }
+
+

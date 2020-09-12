@@ -111,10 +111,11 @@ img {
 body {
   background: #76b852;
   /* fallback for old browsers */
-  background: -webkit-linear-gradient(to top, #76b852, #8DC26F);
-  background: -moz-linear-gradient(to top, #76b852, #8DC26F);
+  background: -webkit-linear-gradient(to top, #131810, #091105);
+  background: -moz-linear-gradient(to top, #2c445a, #471b55);
   background: -o-linear-gradient(to top, #76b852, #8DC26F);
   background: linear-gradient(to top, #76b852, #8DC26F);
+  background-color: black;
   background-size: cover;
   background-attachment: fixed;
   font-family: 'Roboto', sans-serif;
