@@ -1,13 +1,18 @@
 import bodyParser from 'body-parser';
+import cookie from 'cookie';
 import cookieParser from 'cookie-parser';
 import express from 'express';
+import http from 'http';
 import path from 'path';
+import socketIo from 'socket.io';
 
 import { AUTH_PASS_KEY, AUTH_USER_KEY, checkAuth, getUsernameFromEmail, validateCredentials, validateRegistrationForm } from './auth';
 import { insertUser } from './database';
 
 const app = express();
 const PORT = 8000;
+const httpServer = http.createServer(app);
+const io = socketIo(httpServer);
 
 app.set('view engine', 'ejs');
 
@@ -49,7 +54,7 @@ app.post('/register', (req, res) => {
     }
 });
 
-app.post('/logout', (req, res) => {
+app.get('/logout', (req, res) => {
     res.clearCookie(AUTH_USER_KEY);
     res.clearCookie(AUTH_PASS_KEY);
     res.redirect('/');
@@ -80,6 +85,18 @@ app.post('/login', (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
+io.on('connection', socket => {
+    const cookies = cookie.parse(socket.handshake.headers.cookie);
+    const username = getUsernameFromEmail(cookies[AUTH_USER_KEY]);
+
+    socket.on('chat message', message => {
+        io.emit('chat message', {
+            username: username,
+            message: message
+        });
+    })
+});
+
+httpServer.listen(PORT, () => {
     console.log('Server Started!');
 });

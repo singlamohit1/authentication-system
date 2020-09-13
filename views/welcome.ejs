@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
     <link rel="stylesheet" href="css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
@@ -20,26 +21,12 @@
 			<p>Current User: <%= username %> | <a href="/logout"><u>Logout</u></a></p>
 		</div>
 		<div class="main-agileinfo" style="width: 80%">
-			<ul class="list-group" style="max-height:400px;overflow-y: auto;">
-				<li class="list-group-item"><%= username %> : Cras justo odio</li>
-				<li class="list-group-item"><%= username %> : Cras justo odio</li>
-				<li class="list-group-item"><%= username %> : Cras justo odio</li>
-				<li class="list-group-item"><%= username %> : Cras justo odio</li>
-				<li class="list-group-item"><%= username %> : Cras justo odio</li>
-				<li class="list-group-item"><%= username %> : Cras justo odio</li>
-				<li class="list-group-item"><%= username %> : Cras justo odio</li>
-				<li class="list-group-item"><%= username %> : Cras justo odio</li>
-				<li class="list-group-item"><%= username %> : Cras justo odio</li>
-				<li class="list-group-item"><%= username %> : Cras justo odio</li>
-				<li class="list-group-item"><%= username %> : Cras justo odio</li>
-				<li class="list-group-item"><%= username %> : Cras justo odio</li>
-				<li class="list-group-item"><%= username %> : Cras justo odio</li>
-				<li class="list-group-item"><%= username %> : Cras justo odio</li>
+			<ul id="chatMessages" class="list-group" style="max-height:400px;overflow-y: auto;">
 			  </ul>
 		</div>
 		<div class="agileits-top">
-			<input type="text"placeholder="Type your message here..." style="width: 100%; background: transparent;">
-			<input type="submit" value="SEND">
+			<input type="text" id="chatMessage" placeholder="Type your message here..." style="width: 100%; background: transparent;">
+			<input type="submit" onclick="sendMessage()" value="SEND">
 		</div>
 		<!-- copyright -->
 
@@ -58,5 +45,50 @@
 		</ul>
 	</div>
 	<!-- //main -->
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js" integrity="sha512-v8ng/uGxkge3d1IJuEo6dJP8JViyvms0cly9pnbfRxT6/31c3dRWxIiwGnMSWwZjHKOuY3EVmijs7k1jz/9bLA==" crossorigin="anonymous"></script>
+	<script>
+		var socket = io();
+
+		function errorToast(message) {
+			iziToast.error({
+    			title: 'Error',
+    			message: message
+			});
+		}
+
+		function getMessage() {
+			return document.getElementById('chatMessage').value;
+		}
+
+		function setMessage(message) {
+			document.getElementById('chatMessage').value = message;
+		}
+
+		function appendMessage(username, message) {
+			const liElement = document.createElement('li');
+			liElement.classList = ['list-group-item'];
+			const uElement = document.createElement('u');
+			uElement.appendChild(document.createTextNode(username));
+			liElement.appendChild(uElement);
+			liElement.appendChild(document.createTextNode(`: ${message}`));
+			document.getElementById('chatMessages').appendChild(liElement);
+		}
+
+		function sendMessage() {
+			const message = getMessage().trim();
+			if (message) {
+				socket.emit('chat message', message);
+				setMessage('');
+			} else {
+				errorToast('Can\'t send empty message.');
+			}
+		}
+
+		socket.on('chat message', chatMessage => {
+			appendMessage(chatMessage.username, chatMessage.message);
+		});
+	</script>
 </body>
 </html>
