@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- Bootstrap -->
+	<!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
@@ -16,17 +16,42 @@
 	<!-- main -->
 	<div class="main-w3layouts wrapper">
 		<h1>WELCOME</h1>
-		<div class="main-agileinfo">
-			<div class="agileits-top">
-				<form action="/logout" method="post">
-					<input type="submit" value="LOGOUT">
-				</form>
-			</div>
-		</div>
-		<!-- copyright -->
 		<div class="colorlibcopy-agile">
 			<p>Current User: <%= username %></p>
 		</div>
+		<div class="main-agileinfo">
+			<ul class="list-group" style="max-height:400px;overflow-y: auto;">
+				<li class="list-group-item"><%= username %> : Cras justo odio</li>
+				<li class="list-group-item"><%= username %> : Cras justo odio</li>
+				<li class="list-group-item"><%= username %> : Cras justo odio</li>
+				<li class="list-group-item"><%= username %> : Cras justo odio</li>
+				<li class="list-group-item"><%= username %> : Cras justo odio</li>
+				<li class="list-group-item"><%= username %> : Cras justo odio</li>
+				<li class="list-group-item"><%= username %> : Cras justo odio</li>
+				<li class="list-group-item"><%= username %> : Cras justo odio</li>
+				<li class="list-group-item"><%= username %> : Cras justo odio</li>
+				<li class="list-group-item"><%= username %> : Cras justo odio</li>
+				<li class="list-group-item"><%= username %> : Cras justo odio</li>
+				<li class="list-group-item"><%= username %> : Cras justo odio</li>
+				<li class="list-group-item"><%= username %> : Cras justo odio</li>
+				<li class="list-group-item"><%= username %> : Cras justo odio</li>
+			  </ul>
+		</div>
+		<div class="agileits-top">
+			<form action="/" method="post">
+				<input type="text" name="msg" placeholder="type your message here...">
+			</form>
+			<form action="/" method="post">
+				<input type="submit" value="SEND">
+			</form>
+		</div>
+		<div class="agileits-top">
+			<form action="/logout" method="post">
+				<input type="submit" value="LOGOUT">
+			</form>
+		</div>
+		<!-- copyright -->
+
 		<!-- //copyright -->
 		<ul class="colorlib-bubbles">
 			<li></li>
