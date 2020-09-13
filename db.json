@@ -4,6 +4,11 @@
             "username": "user1",
             "email": "singlamohit98@gmail.com",
             "password": "l"
+        },
+        {
+            "username": "user123",
+            "email": "singlamohit98@gmail.co",
+            "password": "l"
         }
     ]
 }

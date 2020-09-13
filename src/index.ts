@@ -8,6 +8,7 @@ import { insertUser, validUser , validateCredentials , getUsernameFromEmail} fro
 const app = express();
 const PORT = 8000;
 const bodyParser = require("body-parser");
+
 var prompt=false;
 
 app.use(bodyParser.urlencoded({
@@ -21,7 +22,9 @@ app.use(cookieParser());
 
 app.get('/', (req, res) => {
     if (checkAuth(req)) {
-        res.redirect('/welcome');
+        res.render('welcome.ejs', {
+            username: getUsernameFromEmail(req.cookies[AUTH_USER_KEY]),
+        });
     } else {
         res.redirect('/login');
     }
@@ -57,27 +60,15 @@ app.post('/logout', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-    if(validUser(req.body))
-    {
+    if(validUser(req.body)) {
         res.cookie(AUTH_USER_KEY, req.body.email); 
         res.cookie(AUTH_PASS_KEY, req.body.password); 
-        res.redirect('/welcome');
+        res.redirect('/');
     }
-    else
-    {
+    else {
         prompt=true;
         res.redirect('/login');
     }
-});
-
-app.get('/welcome', (req, res) => {
-    if (!checkAuth(req)) {
-        res.redirect('/');
-    }
-    else
-    res.render('welcome.ejs', {
-        username: getUsernameFromEmail(req.cookies[AUTH_USER_KEY]),
-    });
 });
 
 app.get('/login', (req, res) => {

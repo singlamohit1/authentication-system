@@ -30,6 +30,7 @@
     "cookie-parser": "^1.4.5",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
-    "simple-json-db": "^1.2.2"
+    "simple-json-db": "^1.2.2",
+    "socket.io": "^2.3.0"
   }
 }
