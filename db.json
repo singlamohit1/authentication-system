@@ -1,3 +1,9 @@
 {
-    "users": []
+    "users": [
+        {
+            "username": "nishantwrp",
+            "email": "admin@nishantwrp.com",
+            "password": "pass"
+        }
+    ]
 }

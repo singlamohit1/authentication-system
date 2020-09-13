@@ -17,9 +17,9 @@
 	<div class="main-w3layouts wrapper">
 		<h1>WELCOME</h1>
 		<div class="colorlibcopy-agile">
-			<p>Current User: <%= username %></p>
+			<p>Current User: <%= username %> | <a href="/logout"><u>Logout</u></a></p>
 		</div>
-		<div class="main-agileinfo">
+		<div class="main-agileinfo" style="width: 80%">
 			<ul class="list-group" style="max-height:400px;overflow-y: auto;">
 				<li class="list-group-item"><%= username %> : Cras justo odio</li>
 				<li class="list-group-item"><%= username %> : Cras justo odio</li>
@@ -38,17 +38,8 @@
 			  </ul>
 		</div>
 		<div class="agileits-top">
-			<form action="/" method="post">
-				<input type="text" name="msg" placeholder="type your message here...">
-			</form>
-			<form action="/" method="post">
-				<input type="submit" value="SEND">
-			</form>
-		</div>
-		<div class="agileits-top">
-			<form action="/logout" method="post">
-				<input type="submit" value="LOGOUT">
-			</form>
+			<input type="text"placeholder="Type your message here..." style="width: 100%; background: transparent;">
+			<input type="submit" value="SEND">
 		</div>
 		<!-- copyright -->
 
