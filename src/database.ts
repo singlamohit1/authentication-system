@@ -1,9 +1,18 @@
 import { Sequelize, DataTypes } from 'sequelize';
 
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: 'db.sqlite3'
-});
+require('dotenv').config();
+
+// @ts-ignore: Assigned afterwards
+let sequelize: Sequelize = null;
+
+if (process.env.SQLITE_DB === 'true') {
+    sequelize = new Sequelize({
+        dialect: 'sqlite',
+        storage: 'db.sqlite3'
+    });
+} else {
+    sequelize = new Sequelize(<string> process.env.POSTGRES_URL);
+}
 
 const UserModel = sequelize.define('User', {
     username: {
