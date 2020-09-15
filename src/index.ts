@@ -7,7 +7,7 @@ import path from 'path';
 import socketIo from 'socket.io';
 
 import { AUTH_PASS_KEY, AUTH_USER_KEY, checkAuth, getUsernameFromEmail, validateCredentials, validateRegistrationForm } from './auth';
-import { insertUser } from './database';
+import { insertUser, initDb } from './database';
 
 const app = express();
 const PORT = 8000;
@@ -23,18 +23,20 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-    if (checkAuth(req)) {
+initDb();
+
+app.get('/', async (req, res) => {
+    if (await checkAuth(req)) {
         res.render('welcome.ejs', {
-            username: getUsernameFromEmail(req.cookies[AUTH_USER_KEY]),
+            username: await getUsernameFromEmail(req.cookies[AUTH_USER_KEY]),
         });
     } else {
         res.redirect('/login');
     }
 });
 
-app.get('/register', (req, res) => {
-    if (checkAuth(req)) {
+app.get('/register', async (req, res) => {
+    if (await checkAuth(req)) {
         res.redirect('/');
     }
 
@@ -43,13 +45,13 @@ app.get('/register', (req, res) => {
     });
 });
 
-app.post('/register', (req, res) => {
-    if (!validateRegistrationForm(req.body)) {
+app.post('/register', async (req, res) => {
+    if (!await validateRegistrationForm(req.body)) {
         res.render('register.ejs', {
             dupticateCredentials: true
         });
     } else {
-        insertUser(req.body);
+        await insertUser(req.body);
         res.redirect('/login');
     }
 });
@@ -60,8 +62,8 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
-app.get('/login', (req, res) => {
-    if (checkAuth(req)) {
+app.get('/login', async (req, res) => {
+    if (await checkAuth(req)) {
         res.redirect('/');
     }
 
@@ -70,11 +72,11 @@ app.get('/login', (req, res) => {
     });
 });
 
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
     const email = <string> req.body.email;
     const password = <string> req.body.password;
 
-    if (validateCredentials(email, password)) {
+    if (await validateCredentials(email, password)) {
         res.cookie(AUTH_USER_KEY, email);
         res.cookie(AUTH_PASS_KEY, password);
         res.redirect('/');
@@ -85,9 +87,9 @@ app.post('/login', (req, res) => {
     }
 });
 
-io.on('connection', socket => {
+io.on('connection', async socket => {
     const cookies = cookie.parse(socket.handshake.headers.cookie);
-    const username = getUsernameFromEmail(cookies[AUTH_USER_KEY]);
+    const username = await getUsernameFromEmail(cookies[AUTH_USER_KEY]);
 
     socket.on('chat message', message => {
         io.emit('chat message', {
