@@ -11,7 +11,7 @@ if (process.env.SQLITE_DB === 'true') {
         storage: 'db.sqlite3'
     });
 } else {
-    sequelize = new Sequelize(<string> process.env.POSTGRES_URL);
+    sequelize = new Sequelize(<string> process.env.DATABASE_URL);
 }
 
 const UserModel = sequelize.define('User', {
