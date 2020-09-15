@@ -10,7 +10,7 @@ import { AUTH_PASS_KEY, AUTH_USER_KEY, checkAuth, getUsernameFromEmail, validate
 import { insertUser, initDb } from './database';
 
 const app = express();
-const PORT = 8000;
+const PORT = process.env.PORT || 3000;
 const httpServer = http.createServer(app);
 const io = socketIo(httpServer);
 
